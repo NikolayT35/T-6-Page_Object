@@ -1,4 +1,4 @@
-package ru.netology.web.data;
+package ru.netology.web.page;
 
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.support.FindBy;
