@@ -16,10 +16,12 @@ repositories {
 }
 
 dependencies {
-    testImplementation 'com.codeborne:selenide:5.11.0'
+    testImplementation 'com.codeborne:selenide:5.15.1'
     testCompile 'ch.qos.logback:logback-classic:1.2.3'
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter', version: '5.7.0'
-    testImplementation 'com.github.javafaker:javafaker:1.0.1'
+    testImplementation 'com.github.javafaker:javafaker:1.0.2'
+    testImplementation 'io.rest-assured:rest-assured:4.3.0'
+    testImplementation 'com.google.code.gson:gson:2.8.6'
 }
 test {
     useJUnitPlatform()
