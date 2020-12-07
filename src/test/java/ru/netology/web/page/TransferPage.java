@@ -14,29 +14,29 @@ public class TransferPage {
     private SelenideElement buttonPay = $("[data-test-id=action-transfer]");
     private SelenideElement heading2 = $(byText("Пополнение карты"));
 
-    public void checkHeadingPaymentCards() {   //проверяем видимость заголовка "Пополнение карты"
+    public void checkHeadingPaymentCards() {
         heading2.shouldBe(Condition.visible);
     }
 
-    public void setPayCardNumber(String card, int payment) {   // метод для ввода суммы, карты-донора и нажатия "пополнить"
+    public void setPayCardNumber(String card, int payment) {
         amount.setValue(String.valueOf(payment));
         fromCard.setValue(card);
         buttonPay.click();
     }
 
-    public DashboardPage validPayCard() {   // метод для возврата в DashboardPage после успешного перевода
+    public DashboardPage validPayCard() {
         return new DashboardPage();
     }
 
-    public void invalidPayCard() {   // метод для получения ошибки при переводе на несуществующую карты
+    public void invalidPayCard() {
         $("[data-test-id=error-notification] .notification__content").shouldHave(text("Произошла ошибка"));
     }
 
-    public void validPaySameCard() {   //  метод для получения ошибки при переводе на ту же карту
-        $("[data-test-id=error-notification] .notification__content").shouldHave(text("Невозможно осуществить перевод на ту же самую карту"));
+    public void validPaySameCard() {
+        $("[data-test-id=error-notification] .notification__content").shouldHave(text("Невозможно осуществить перевод на эту же карту"));
     }
 
-    public void validPayExtendAmount() {   //метод для получения ошибки при переводе суммы большей, чем есть на карте-доноре
-        $("[data-test-id=error-notification] .notification__content").shouldHave(text("Вы не можете перевести средств больше, чем есть на карте"));
+    public void validPayExtendAmount() {
+        $("[data-test-id=error-notification] .notification__content").shouldHave(text("Недостаточно средств на карте"));
     }
 }
