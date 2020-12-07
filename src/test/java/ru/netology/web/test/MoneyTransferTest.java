@@ -19,7 +19,7 @@ class MoneyTransferTest {
 
     @Test
     void shouldTransferFromSecondToFirstCard() {
-        val amount = 4999;
+        val amount = 9999;
         val loginPage = new LoginPageV2();
         val authInfo = DataHelper.getAuthInfo();
         val verificationPage = loginPage.validLogin(authInfo);
@@ -61,5 +61,37 @@ class MoneyTransferTest {
         val expected2 = initialBalanceFromCard - amount;
         assertEquals(expected1, actual1);
         assertEquals(expected2, actual2);
+    }
+
+    @Test
+    void shouldNotTransferMoreLimit() {
+        val loginPage = new LoginPageV2();
+        val authInfo = DataHelper.getAuthInfo();
+        val verificationPage = loginPage.validLogin(authInfo);
+        val verificationCode = DataHelper.getVerificationCodeFor(authInfo);
+        val dashboardPage = verificationPage.validVerify(verificationCode);
+        dashboardPage.checkHeadingYourCards();
+        val initialBalanceFromCard = dashboardPage.getSecondCardBalance();
+        val transferPage = dashboardPage.validChoosePay1();
+        transferPage.checkHeadingPaymentCards();
+        val amount = 1 + initialBalanceFromCard;
+        transferPage.setPayCardNumber(DataHelper.getSecondCard(), amount);
+        transferPage.validPayExtendAmount();
+    }
+
+    @Test
+    void shouldNotTransferMoreLimit2() {
+        val loginPage = new LoginPageV2();
+        val authInfo = DataHelper.getAuthInfo();
+        val verificationPage = loginPage.validLogin(authInfo);
+        val verificationCode = DataHelper.getVerificationCodeFor(authInfo);
+        val dashboardPage = verificationPage.validVerify(verificationCode);
+        dashboardPage.checkHeadingYourCards();
+        val initialBalanceFromCard = dashboardPage.getFirstCardBalance();
+        val transferPage = dashboardPage.validChoosePay2();
+        transferPage.checkHeadingPaymentCards();
+        val amount = 1 + initialBalanceFromCard;
+        transferPage.setPayCardNumber(DataHelper.getFirstCard(), amount);
+        transferPage.validPayExtendAmount();
     }
 }
